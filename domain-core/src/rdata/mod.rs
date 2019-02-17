@@ -21,8 +21,10 @@ pub mod rfc2782;
 pub mod rfc3596;
 pub mod rfc4034;
 pub mod rfc5155;
+pub mod rfc7344;
 
-#[macro_use] mod macros;
+#[macro_use]
+mod macros;
 use crate::bits::opt::Opt;
 
 // The rdata_types! macro (defined in self::macros) reexports the record data
@@ -40,7 +42,7 @@ use crate::bits::opt::Opt;
 // you might have to either newtype with those removes or, God forbid, modify
 // the macro). Each type entry has to be followed by a comma, even the last
 // one.
-rdata_types!{
+rdata_types! {
     rfc1035::{
         master {
             A,
@@ -86,8 +88,13 @@ rdata_types!{
             Nsec3param,
         }
     }
+    rfc7344::{
+        master {
+            Cdnskey,
+            Cds,
+        }
+    }
 }
-
 
 pub mod parsed {
     pub use super::rfc1035::parsed::*;
@@ -95,4 +102,5 @@ pub mod parsed {
     pub use super::rfc3596::parsed::*;
     pub use super::rfc4034::parsed::*;
     pub use super::rfc5155::parsed::*;
+    pub use super::rfc7344::parsed::*;
 }
