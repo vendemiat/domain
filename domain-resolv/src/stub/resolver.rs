@@ -211,13 +211,16 @@ impl Query {
     /// Starts a new query for the current server.
     ///
     /// Prepares the query message and then starts the server query. Returns
-    /// `None` if a query cannot be started because 
+    /// `None` if a query cannot be started because
     fn start_query(&mut self) -> Option<ServerQuery> {
+        if self.message.is_none() {
+            return None;
+        }
         let mut message = self.message.take().unwrap().unfreeze();
         let (message, res) = {
             let info = match self.current_server() {
                 Some(info) => info,
-                None => return None
+                None => return None,
             };
             info.prepare_message(&mut message);
             let message = message.freeze();
